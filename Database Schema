@@ -1,0 +1,23 @@
+-- schema.sql
+CREATE TABLE employees (
+    id BIGSERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE leave_requests (
+    id BIGSERIAL PRIMARY KEY,
+    employee_id BIGINT REFERENCES employees(id),
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    reason TEXT,
+    status VARCHAR(20) NOT NULL,
+    type VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_leave_employee ON leave_requests(employee_id);
+CREATE INDEX idx_leave_dates ON leave_requests(start_date, end_date);
