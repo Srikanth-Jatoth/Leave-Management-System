@@ -1,0 +1,26 @@
+@RestController
+@RequestMapping("/api/leave-requests")
+@RequiredArgsConstructor
+public class LeaveRequestController {
+    private final LeaveRequestService leaveRequestService;
+
+    @PostMapping
+    public ResponseEntity<LeaveRequest> createLeaveRequest(@RequestBody LeaveRequestDTO request) {
+        return ResponseEntity.ok(leaveRequestService.createLeaveRequest(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<LeaveRequest>> getLeaveRequests(
+            @RequestParam(required = false) Long employeeId,
+            @RequestParam(required = false) LeaveStatus status) {
+        return ResponseEntity.ok(leaveRequestService.getLeaveRequests(employeeId, status));
+    }
+
+    @PutMapping("/{id}/status")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<LeaveRequest> updateLeaveStatus(
+            @PathVariable Long id,
+            @RequestBody LeaveStatusDTO statusUpdate) {
+        return ResponseEntity.ok(leaveRequestService.updateLeaveStatus(id, statusUpdate));
+    }
+}
