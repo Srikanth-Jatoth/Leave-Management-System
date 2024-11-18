@@ -1,0 +1,17 @@
+// src/types/index.ts
+export interface LeaveRequest {
+    id: number;
+    startDate: string;
+    endDate: string;
+    reason: string;
+    status: 'PENDING' | 'APPROVED' | 'REJECTED';
+    type: 'ANNUAL' | 'SICK' | 'PERSONAL';
+}
+
+export interface Employee {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: 'EMPLOYEE' | 'MANAGER' | 'ADMIN';
+}
