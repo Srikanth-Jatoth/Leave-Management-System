@@ -1,0 +1,48 @@
+// Employee.java
+@Entity
+@Table(name = "employees")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    
+    @OneToMany(mappedBy = "employee")
+    private List<LeaveRequest> leaveRequests;
+}
+
+// LeaveRequest.java
+@Entity
+@Table(name = "leave_requests")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class LeaveRequest {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+    
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String reason;
+    
+    @Enumerated(EnumType.STRING)
+    private LeaveStatus status;
+    
+    @Enumerated(EnumType.STRING)
+    private LeaveType type;
+}
